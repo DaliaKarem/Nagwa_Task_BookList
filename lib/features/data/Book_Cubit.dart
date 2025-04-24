@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class BookCubit extends Cubit<BookState>{
   BookCubit():super(BookLoading());
   BookRepo repo=BookRepo();
+  String ? query;
    getBooks() async{
      try{
        emit(BookLoading());
@@ -20,5 +21,12 @@ class BookCubit extends Cubit<BookState>{
        emit(BookError(e.toString()));
      }
    }
+   searchBooks(String search)async{
+     final List<BookModel> books= await repo.getBooks();
 
+     final searchedBook=books.where((e)=>e.title.toLowerCase().contains(search.toLowerCase())).toList();
+     print("Searched  $search");
+     print("Books are $searchedBook");
+     emit(BooksLists(searchedBook));
+   }
 }

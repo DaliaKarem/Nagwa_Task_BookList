@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                   child: SearchBarWidget(
                     hint: "Search books...",
                     onSearch: (query) {
-                     // context.read<BookCubit>().searchBooks(query);
+                    context.read<BookCubit>().searchBooks(query);
                     },
                   ),
                 ),
