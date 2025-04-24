@@ -1,0 +1,2 @@
+D:/Projects/Nagwa_Task/android/app/.cxx/Debug/2w5b9q10/x86/CMakeFiles/edit_cache.dir
+D:/Projects/Nagwa_Task/android/app/.cxx/Debug/2w5b9q10/x86/CMakeFiles/rebuild_cache.dir
