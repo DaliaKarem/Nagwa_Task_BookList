@@ -6,24 +6,44 @@ import '../../model/BookModel.dart';
 
 class SQFlite {
   static Database? _db;
+  static bool _isInitialized = false;
 
   Future<Database?> get db async {
-    if (_db == null) {
-      print("DB init");
-      _db = await initDB();
-      return _db;
-    } else
-      print("Exist DB");
-      return _db;
+    if (!_isInitialized || _db == null) {
+      print("Initializing DB...");
+      await _initDatabase();
+      _isInitialized = true;
+    }
+    return _db;
   }
 
-  Future<Database> initDB() async {
-    final Dir = await getDatabasesPath();
-    final String path = join(Dir, "Books.db");
-    return await openDatabase(path,
-        version: 6, onCreate: _onCreate, onUpgrade: _onUpgrade);
+  Future<void> _initDatabase() async {
+    try {
+      if (_db != null) {
+        await _db!.close();
+      }
+
+      final dir = await getDatabasesPath();
+      final path = join(dir, "Books.db");
+      _db = await openDatabase(
+        path,
+        version: 16,
+        onCreate: _onCreate,
+        onUpgrade: _onUpgrade,
+      );
+    } catch (e) {
+      print("Database initialization failed: $e");
+      rethrow;
+    }
   }
 
+  Future<void> close() async {
+    if (_db != null) {
+      await _db!.close();
+      _db = null;
+    }
+    _isInitialized = false;
+  }
   Future<void> _onCreate(Database database, int version) async {
     print("Create DB");
     await database.execute('''
@@ -49,10 +69,9 @@ class SQFlite {
   Future<void> _onUpgrade(
       Database database, int oldVersion, int newVersion) async {
     print("Drop");
-    _onCreate(database, newVersion);
-    // final dir=await getDatabasesPath();
-    // final path=join(dir,"Books.db");
-    // return await deleteDatabase(path);
+   //  final dir=await getDatabasesPath();
+   //  final path=join(dir,"Books.db");
+   //  return await deleteDatabase(path);
   }
 
   Future<List<Map<String, dynamic>>> read(String sql) async {
@@ -99,13 +118,20 @@ class SQFlite {
   }
 
   Future<List<BookModel>> searchBooks(String query) async {
-    print("Search of $query");
+    if (query.isEmpty) return []; // Handle empty query
+
     final db = await this.db;
-    final List<Map<String, dynamic>> maps = await db!.query(
-      "Books",
-      where: 'title LIKE ? OR subjects LIKE ?',
-      whereArgs: ['%$query%', '%$query%'],
-    );
-    return List.generate(maps.length, (i) => BookModel.fromJson(maps[i]));
+    try {
+      final results = await db!.query(
+        "Books",
+        where: 'title LIKE ? OR subjects LIKE ?',
+        whereArgs: ['%$query%', '%$query%'],
+      );
+
+      return results.map((map) => BookModel.fromJson(map)).toList();
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 }
