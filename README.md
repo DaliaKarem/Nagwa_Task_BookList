@@ -1,24 +1,70 @@
 # Book List App 
-which represent set of books 
- 
+A Flutter application that displays a collection of books from the Gutendex API with responsive design for all devices. 
 
-## Getting Started
+#Features
 
-This project is a starting point for a Flutter application.
+- **Responsive UI**: Adapts to phones, tablets, and desktops
+- **Book Listing**: Displays books with covers, titles, and authors
+- **Search Functionality**: Find books by title 
+- **Offline Support**: Caches data for offline access
+- **Infinite Scroll**: Loads books as you scroll
 
-A few resources to get you started if this is your first Flutter project:
+#Technical Stack
+- **Flutter**: 3.19.5 (Dart 3.3.0)
+- **State Management**: Flutter Bloc (Cubit)
+- **Local Storage**: SQLite (sqflite)
+- **Networking**: Http 
+- **Responsive Design**: MediaQuery + LayoutBuilder
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+#Prerequisites
+- Flutter SDK (version 3.19.5 or higher)
+- Android Studio/Xcode for emulators
+- Java 17+ for Android development
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Android Requirements
+
+Ensure your `android/app/build.gradle` has:
+```gradle
+android {
+    compileSdkVersion 34
+    minSdkVersion 23
+    targetSdkVersion 34
+}
 
 
 
 
+#### Project Structure
+
+lib/
+├── core/
+│   ├── constants/ 
+             ├──appColors.dart
+             ├── appLinks.dart  
+│   ├── utils/  
+            ├── DeviceUtils.dart      
+│   
+├── features/
+│       ├── Controller/  
+             ├── Book_Cubit.dart  
+             ├── Book_state.dart  
+│       ├── View/  
+             ├──Screen
+                  ├── HomePage.dart  
+                  ├── SplashScreen.dart  
+             ├── SharedWidgets 
+                  ├── BookListView.dart  
+                  ├── SearchBar.dart  
+   
+│       └── data/ 
+               ├── SQFlite.dart  
+        └── model/
+               ├── BookModel.dart  
+        └── repo/
+               ├── BookRepo.dart  
+
+└── main.dart           
+
+#Screenshots
 
 
-to run my app:
-1_id  of com.android.application must be version "8.2.1" or above 
