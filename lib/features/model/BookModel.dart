@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class BookModel extends Equatable {
@@ -43,27 +45,21 @@ class BookModel extends Equatable {
     );
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    if (this.authors != null) {
-      data['authors'] = this.authors!.map((v) => v.toJson()).toList();
-    }
-    data['summaries'] = this.summaries;
-    // if (this.translators != null) {
-    //   data['translators'] = this.translators!.map((v) => v.toJson()).toList();
-    // }
-    data['subjects'] = this.subjects;
-    data['bookshelves'] = this.bookshelves;
-    data['languages'] = this.languages;
-    data['copyright'] = this.copyright;
-    data['media_type'] = this.mediaType;
-    if (this.formats != null) {
-      data['formats'] = this.formats!.toJson();
-    }
-    data['download_count'] = this.downloadCount;
-    return data;
+    return {
+      'id': id,
+      'title': title,
+      'authors': jsonEncode(authors.map((a) => a.toJson()).toList()),
+      'summaries': jsonEncode(summaries),
+      'subjects': jsonEncode(subjects),
+      'bookshelves': jsonEncode(bookshelves),
+      'languages': jsonEncode(languages),
+      'copyright': copyright == true ? 1 : 0,
+      'media_type': mediaType,
+      'formats': formats != null ? jsonEncode(formats!.toJson()) : null,
+      'download_count': downloadCount,
+    };
   }
+
 
   @override
   List<Object?> get props => [

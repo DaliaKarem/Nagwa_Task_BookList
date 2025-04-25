@@ -25,20 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Solid background color if you like
-      backgroundColor: appColor.primaryColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'images/logo.png',
-              width: 200,
-              height: 200,
-              fit: BoxFit.contain,
-            ),
-            Text("Book List",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: appColor.textColor),)
-          ],
-        ),
+      body: Image.asset(
+        'images/logo.png',
+        fit: BoxFit.fill,
       ),
     );
   }
