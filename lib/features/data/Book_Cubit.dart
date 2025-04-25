@@ -13,10 +13,10 @@ class BookCubit extends Cubit<BookState> {
   getBooks() async {
     emit(BookLoading());
     try {
-      final local = await sqFlite.getAllBooks();
-      if (local.isNotEmpty) {
-        emit(BooksLists(local));
-      }
+      //final local = await sqFlite.getAllBooks();
+      // if (local.isNotEmpty) {
+      //   emit(BooksLists(local));
+      // }
     try {
       await Future.delayed(Duration(seconds: 3));
       final List<BookModel> books = await repo.getBooks();
@@ -26,9 +26,9 @@ class BookCubit extends Cubit<BookState> {
       emit(BooksLists(books));
     } catch (networkError) {
       print("Network Error");
-      if (local.isEmpty) {
-        emit(BookError(networkError.toString()));
-      }
+      // if (local.isEmpty) {
+      //   emit(BookError(networkError.toString()));
+      // }
     }
   }catch (e) {
       emit(BookError(e.toString()));
@@ -37,7 +37,7 @@ class BookCubit extends Cubit<BookState> {
 
   searchBooks(String search) async {
     try{
-      final List<BookModel>local=await sqFlite.searchBooks(search);
+      //final List<BookModel>local=await sqFlite.searchBooks(search);
       final List<BookModel> books = await repo.getBooks();
       final searchedBook = books
           .where((e) => e.title.toLowerCase().contains(search.toLowerCase()))

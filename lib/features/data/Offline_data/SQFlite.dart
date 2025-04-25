@@ -18,23 +18,15 @@ class SQFlite {
   }
 
   Future<void> _initDatabase() async {
-    try {
-      if (_db != null) {
-        await _db!.close();
-      }
-
-      final dir = await getDatabasesPath();
-      final path = join(dir, "Books.db");
-      _db = await openDatabase(
-        path,
-        version: 16,
-        onCreate: _onCreate,
-        onUpgrade: _onUpgrade,
-      );
-    } catch (e) {
-      print("Database initialization failed: $e");
-      rethrow;
-    }
+    if (_db != null) return;
+    final dir = await getDatabasesPath();
+    final path = join(dir, "Books.db");
+    _db = await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+    );
   }
 
   Future<void> close() async {
@@ -68,7 +60,7 @@ class SQFlite {
 
   Future<void> _onUpgrade(
       Database database, int oldVersion, int newVersion) async {
-    print("Drop");
+  //  print("Drop");
    //  final dir=await getDatabasesPath();
    //  final path=join(dir,"Books.db");
    //  return await deleteDatabase(path);
