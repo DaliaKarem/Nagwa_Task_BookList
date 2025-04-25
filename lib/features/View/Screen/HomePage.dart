@@ -1,11 +1,12 @@
-import 'package:booklist/features/data/Book_Cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import 'SharedWidegts/BookListView.dart';
-import 'SharedWidegts/SeachBar.dart';
-import 'data/Book_State.dart';
+import '../../Controller/Book_Cubit.dart';
+import '../../Controller/Book_State.dart';
+import '../SharedWidegts/BookListView.dart';
+import '../SharedWidegts/SeachBar.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

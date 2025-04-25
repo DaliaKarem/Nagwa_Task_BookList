@@ -1,8 +1,8 @@
 import 'package:booklist/core/appColors.dart';
-import 'package:booklist/features/data/Book_State.dart';
 import 'package:flutter/material.dart';
 
-import '../model/BookModel.dart';
+import '../../model/BookModel.dart';
+
 class Booklistview extends StatelessWidget {
   const Booklistview({super.key, required this.list});
   final List<BookModel> list;
